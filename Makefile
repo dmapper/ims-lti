@@ -17,7 +17,7 @@ test-unit:
 			$(MOCHA_OPTS)
 
 build: clean
-	./node_modules/.bin/coffee -o ./lib -c ./src
+	./node_modules/.bin/coffee --bare --no-header -o ./lib -c ./src
 
 cover: clean
 	./node_modules/.bin/coffeeCoverage ./src ./lib

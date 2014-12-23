@@ -69,6 +69,8 @@ class Provider
   _valid_oauth: (req, body, callback) ->
     generated = @signer.build_signature req, body, @consumer_secret
     valid_signature = generated is body.oauth_signature
+    unless  valid_signature
+      console.log 'not valid_signature:', generated, body.oauth_signature
     return callback new errors.SignatureError('Invalid Signature'), false if not valid_signature
     @nonceStore.isNew body.oauth_nonce, body.oauth_timestamp, (err, valid) ->
       if not valid
