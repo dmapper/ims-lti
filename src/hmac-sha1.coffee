@@ -68,10 +68,11 @@ class HMAC_SHA1
       req = hapiRawReq
 
     originalUrl = req.originalUrl or req.url
+    
+    parsedUrl  = url.parse originalUrl, true
 
-    hitUrl = parsedUrl.protocol + '//' + req.headers.host + parsedUrl.pathname
+    hitUrl     = parsedUrl.protocol + '://' + req.headers.host + parsedUrl.pathname
 
-    console.log('originalUrl:', originalUrl)
     console.log('hitUrl:', hitUrl)
     console.log('body:', body)
     console.log('query:', parsedUrl.query)
