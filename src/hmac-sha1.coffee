@@ -71,7 +71,16 @@ class HMAC_SHA1
 
     parsedUrl  = url.parse originalUrl, true
 
-    hitUrl     = parsedUrl.protocol + '//' + req.headers.host + parsedUrl.pathname
+    if req.headers and req.headers['x-forwarded-proto']
+      protocol = req.headers['x-forwarded-proto']
+    else
+      protocol = req.protocol
+
+      if protocol is undefined
+        encrypted = req.connection.encrypted
+        protocol = (encrypted and 'https') or 'http'
+
+    hitUrl = protocol + '://' + req.headers.host + parsedUrl.pathname
 
     console.log('originalUrl:', req.originalUrl, req.url)
     console.log('hitUrl:', hitUrl)
